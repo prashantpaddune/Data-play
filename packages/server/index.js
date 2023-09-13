@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const cors = require('cors');
+const isSafeQuery = require("./helpers/safe-query");
 
 const app = express();
 const PORT = 3001;
@@ -21,6 +22,11 @@ app.use(bodyParser.json());
 
 app.post('/query', async (req, res) => {
     const { query } = req.body;
+
+    if (!isSafeQuery(query)) {
+        res.status(400).json({ error: "Unsafe query detected." });
+        return;
+    }
 
     try {
         const result = await pool.query(query);
