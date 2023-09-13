@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const cors = require('cors');
 const isSafeQuery = require("./helpers/safe-query");
+const logQuery = require("./helpers/log-query");
 
 const app = express();
 const PORT = 3001;
@@ -30,6 +31,7 @@ app.post('/query', async (req, res) => {
 
     try {
         const result = await pool.query(query);
+        logQuery(query);
         res.status(200).json(result.rows);
     } catch (error) {
         res.status(500).json({ error: error.message });
