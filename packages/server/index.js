@@ -4,6 +4,7 @@ const { Pool } = require('pg');
 const cors = require('cors');
 const isSafeQuery = require("./helpers/safe-query");
 const logQuery = require("./helpers/log-query");
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = 3001;
@@ -20,6 +21,13 @@ const pool = new Pool({
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+
+// Set up rate limiting
+app.use(rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+}));
 
 app.post('/query', async (req, res) => {
     const { query } = req.body;
