@@ -1,3 +1,4 @@
+require('./helpers/load-env');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
@@ -7,7 +8,7 @@ const logQuery = require("./helpers/log-query");
 const rateLimit = require('express-rate-limit');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const pool = new Pool({
     user: process.env.DB_USER,
