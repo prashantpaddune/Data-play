@@ -1,9 +1,3 @@
-import HeaderSection from "@/components/Header";
+import PageHome from "@/page-components/PageHome";
 
-export default function Home() {
-  return (
-    <section>
-      <HeaderSection/>
-    </section>
-  )
-}
+export default PageHome;
