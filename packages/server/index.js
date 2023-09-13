@@ -30,7 +30,7 @@ app.use(rateLimit({
     max: 100
 }));
 
-app.post('/query', async (req, res) => {
+app.post('/api/query', async (req, res) => {
     const { query } = req.body;
 
     if (!query) {
@@ -51,7 +51,7 @@ app.post('/query', async (req, res) => {
     }
 });
 
-app.get('/autocomplete', async (req, res) => {
+app.get('/api/auto-complete', async (req, res) => {
     try {
         const tablesResult = await pool.query(`
             SELECT table_name 
@@ -61,7 +61,7 @@ app.get('/autocomplete', async (req, res) => {
 
         const tables = tablesResult.rows.map(row => row.table_name);
 
-        let schema = [];
+        const columnSet = new Set();
 
         for (let table of tables) {
             const columnsResult = await pool.query(`
@@ -72,15 +72,23 @@ app.get('/autocomplete', async (req, res) => {
 
             const columns = columnsResult.rows.map(row => row.column_name);
 
-            schema.push({ table, columns });
+            columns.forEach(col => columnSet.add(col));
         }
 
-        res.status(200).json(schema);
+        const uniqueColumns = [...columnSet];
+
+        const suggestionData = {
+            tables: tables,
+            columns: uniqueColumns
+        };
+
+        res.status(200).json(suggestionData);
 
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
