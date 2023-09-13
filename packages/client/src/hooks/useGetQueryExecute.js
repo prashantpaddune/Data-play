@@ -1,9 +1,9 @@
 import {useRequest} from "@/hooks/useRequest";
 
 
-const useGetQueryExecute = () => {
+const useGetQueryExecute = ({ query = '' }) => {
     const [{ data, loading, error }, trigger] = useRequest({
-        url: '/query',
+        url: '/api/query',
         method: 'POST',
     }, { manual: true, autoCancel: false })
 
@@ -11,7 +11,7 @@ const useGetQueryExecute = () => {
         try {
             await trigger({
                 data: {
-                    query: "select * from clients"
+                    query: query
                 }
             });
         } catch (error) {
