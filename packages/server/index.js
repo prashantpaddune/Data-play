@@ -9,7 +9,6 @@ const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -32,6 +31,11 @@ app.use(rateLimit({
 
 app.post('/query', async (req, res) => {
     const { query } = req.body;
+
+    if(!query) {
+        res.status(400).json({ error: "No query provided." });
+        return;
+    }
 
     if (!isSafeQuery(query)) {
         res.status(400).json({ error: "Unsafe query detected." });
