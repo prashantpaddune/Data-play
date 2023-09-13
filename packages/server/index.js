@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const cors = require('cors');
 const isSafeQuery = require("./helpers/safe-query");
-const logQuery = require("./helpers/log-query");
 const rateLimit = require('express-rate-limit');
+const getColumns = require("./helpers/get-columns");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,7 +33,7 @@ app.use(rateLimit({
 app.post('/query', async (req, res) => {
     const { query } = req.body;
 
-    if(!query) {
+    if (!query) {
         res.status(400).json({ error: "No query provided." });
         return;
     }
@@ -45,31 +45,7 @@ app.post('/query', async (req, res) => {
 
     try {
         const result = await pool.query(query);
-        logQuery(query);
-        res.status(200).json(result.rows);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-
-app.get('/query', async (req, res) => {
-    const { query } = req.body;
-
-    if(!query) {
-        res.status(400).json({ error: "No query provided." });
-        return;
-    }
-
-    if (!isSafeQuery(query)) {
-        res.status(400).json({ error: "Unsafe query detected." });
-        return;
-    }
-
-    try {
-        const result = await pool.query(query);
-        logQuery(query);
-        res.status(200).json(result.rows);
+        res.status(200).json({ columns: getColumns(result), query_results: result.rows })
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -96,10 +72,7 @@ app.get('/autocomplete', async (req, res) => {
 
             const columns = columnsResult.rows.map(row => row.column_name);
 
-            schema.push({
-                table,
-                columns
-            });
+            schema.push({ table, columns });
         }
 
         res.status(200).json(schema);
