@@ -60,7 +60,7 @@ export const PlayButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    margin-top: 15px; // Give space above the button on smaller screens
+    margin-top: 15px;
   }
 `;
 

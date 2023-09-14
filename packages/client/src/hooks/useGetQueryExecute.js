@@ -22,7 +22,7 @@ const useGetQueryExecute = ({ query = '' }) => {
     return {
         handleExecute,
         loading,
-        data,
+        queryData: data,
     }
 
 }
