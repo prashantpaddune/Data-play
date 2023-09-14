@@ -51,6 +51,7 @@ function Table({
         : 0;
 
     return (
+        <>
         <TableContainer ref={tableContainerRef} className={`ui-table-root`}>
             <StyledTable className="ui-table">
                 <thead className="ui-table-head">
@@ -121,12 +122,13 @@ function Table({
 
                 </tbody>
             </StyledTable>
-            {virtualRows.length > 0 && (
+        </TableContainer>
+            {rows.length > 0 && (
                 <RowCount>
-                    Showing {virtualRows.length} rows
+                    Showing {rows.length} rows
                 </RowCount>
             )}
-        </TableContainer>
+        </>
     );
 }
 

@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const TableContainer = styled.div`
   width: 100%;
-  overflow-x: auto;
+  overflow: auto;
+  height: calc(100vh - 500px);
   font-family: 'Poppins', sans-serif;
   background-color: #f0f0f0;
 `;
@@ -71,5 +72,6 @@ export const RowCount = styled.p`
   font-size: 16px;
   font-weight: bold;
   text-align: right; 
-  padding-right: 10px;
+  padding-right: 20px;
+  font-family: 'Poppins', sans-serif;
 ` ;

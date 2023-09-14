@@ -5,7 +5,6 @@ import 'ace-builds/src-noconflict/theme-xcode';
 import langTools from 'ace-builds/src-noconflict/ext-language_tools';
 
 function AceSqlEditor({ onChange = () => {}, value = '', suggestionData = {}, getSelection = () => {}}) {
-    const innerHeight = typeof window !== 'undefined' ? window.innerHeight - 450 : 500;
 
     const staticWordCompleter = {
         getCompletions(editor, session, pos, prefix, callback) {
@@ -44,7 +43,7 @@ function AceSqlEditor({ onChange = () => {}, value = '', suggestionData = {}, ge
             showGutter
             highlightActiveLine
             width="100%"
-            height={innerHeight}
+            height={360}
             resize="vertical"
             setOptions={{
                 enableBasicAutocompletion : true,
