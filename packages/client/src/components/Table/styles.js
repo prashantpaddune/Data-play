@@ -4,10 +4,12 @@ export const TableContainer = styled.div`
   width: 100%;
   overflow-x: auto;
   font-family: 'Poppins', sans-serif;
+  background-color: #f0f0f0;
 `;
 
 export const StyledTable = styled.table`
   width: 100%;
+  height: 40vh;
   border-collapse: collapse;
   border-spacing: 0;
   

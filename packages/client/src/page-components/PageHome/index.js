@@ -5,6 +5,8 @@ import AceSqlEditor from "@/components/AceEditor";
 import useGetSuggestionsEditor from "@/hooks/useGetSuggestionsEditor";
 import useGetResultColumns from "@/hooks/useGetResultColumns";
 import Table from "@/components/Table";
+import Loader from "@/components/Loader";
+import { Wrapper } from "@/page-components/PageHome/styles";
 
 export default function PageHome() {
     const {
@@ -27,25 +29,19 @@ export default function PageHome() {
 
     const columnsData = useGetResultColumns({ columns : columns });
 
-    const renderEditor = () => {
-        if (suggestionloading) {
-            return <p>Loading editor...</p>
-        }
+    if (suggestionloading) {
+        return <Wrapper><Loader /></Wrapper>
+    }
 
-        return (
+    return (
+        <section>
+            <HeaderSection onClick={handleExecute} loading={loading}/>
             <AceSqlEditor
                 onChange={handleChangeSqlEditorQuery}
                 value={query}
                 suggestionData={suggestionData}
                 getSelection={getSelection}
             />
-        )
-    }
-
-    return (
-        <section>
-            <HeaderSection onClick={handleExecute} loading={loading}/>
-            {renderEditor()}
             <Table
                 columns={columnsData}
                 data={query_results}
