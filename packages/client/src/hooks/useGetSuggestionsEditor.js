@@ -3,7 +3,7 @@ import {useRequest} from "@/hooks/useRequest";
 
 
 const useGetSuggestionsEditor = () => {
-    const [sqlEditorData, setSqlEditorData] = useState({ query: '', executedQuery: '' });
+    const [sqlEditorData, setSqlEditorData] = useState({ query: '-- tables: customers, employees, suppliers, territories \n', executedQuery: '' });
     const [queryString, setQueryString] = useState(sqlEditorData?.query);
 
     const [{ data, loading, error }, trigger] = useRequest({
