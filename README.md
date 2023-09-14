@@ -8,11 +8,11 @@ Data Play allows users to craft, test, and master your SQL skills with Data Play
 
 ## Table of Contents
 
-- [Tech Stack](#tech-stack)
-- [Performance](#performance)
-- [Getting Started](#getting-started)
-- [Contributions](#contributions)
-- [License](#license)
+- [Tech Stack](#-tech-stack)
+- [Performance](#-performance)
+- [Getting Started](#-getting-started)
+- [Contributions](#-contributions)
+- [License](#-license)
 
 ## 🧰 Tech Stack
 
