@@ -9,7 +9,7 @@ export const TableContainer = styled.div`
 
 export const StyledTable = styled.table`
   width: 100%;
-  height: 40vh;
+  height: 100vh;
   border-collapse: collapse;
   border-spacing: 0;
   

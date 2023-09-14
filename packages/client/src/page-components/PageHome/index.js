@@ -6,7 +6,7 @@ import useGetSuggestionsEditor from "@/hooks/useGetSuggestionsEditor";
 import useGetResultColumns from "@/hooks/useGetResultColumns";
 import Table from "@/components/Table";
 import Loader from "@/components/Loader";
-import { Wrapper } from "@/page-components/PageHome/styles";
+import { Wrapper, TableLoader } from "@/page-components/PageHome/styles";
 
 export default function PageHome() {
     const {
@@ -22,7 +22,7 @@ export default function PageHome() {
     const {
         handleExecute = () => {},
         loading = false,
-        queryData = {}
+        queryData = {},
     } = useGetQueryExecute({ query: executedQuery });
 
     const { columns = [], query_results = [] } = queryData || {};
@@ -31,6 +31,22 @@ export default function PageHome() {
 
     if (suggestionloading) {
         return <Wrapper><Loader /></Wrapper>
+    }
+
+
+    const renderTable = () => {
+        if (loading) {
+            return <TableLoader><Loader /></TableLoader>
+        }
+
+        return (
+            <Table
+                columns={columnsData}
+                data={query_results}
+                loading={true}
+                loadingRowsCount={10}
+            />
+        )
     }
 
     return (
@@ -42,12 +58,7 @@ export default function PageHome() {
                 suggestionData={suggestionData}
                 getSelection={getSelection}
             />
-            <Table
-                columns={columnsData}
-                data={query_results}
-                loading={true}
-                loadingRowsCount={10}
-            />
+            {renderTable()}
         </section>
     )
 };
