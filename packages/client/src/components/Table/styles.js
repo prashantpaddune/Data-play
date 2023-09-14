@@ -17,7 +17,11 @@ export const StyledTable = styled.table`
   .ui-table-body {
     height: 100px;
     overflow-y: scroll;
-    
+  }
+  
+  .ui-table-head {
+    position: sticky;
+    top: 0;
   }
   
   .ui-table-head-cell {

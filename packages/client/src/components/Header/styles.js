@@ -9,7 +9,6 @@ export const Header = styled.header`
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 
   @media (max-width: 768px) {
-    flex-direction: column;
     align-items: center;
     padding: 15px;
   }

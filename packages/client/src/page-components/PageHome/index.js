@@ -22,9 +22,10 @@ export default function PageHome() {
 
     const {
         handleExecute = () => {},
+        handleOnKeyDown = () => {},
         loading = false,
         queryData = {},
-        error = {}
+        error = {},
     } = useGetQueryExecute({ query: executedQuery });
 
     const { columns = [], query_results = [] } = queryData || {};
@@ -67,7 +68,7 @@ export default function PageHome() {
     }
 
     return (
-        <section>
+        <section onKeyDown={(e) => handleOnKeyDown(e)}>
             <HeaderSection onClick={handleExecute} loading={loading}/>
             <AceSqlEditor
                 onChange={handleChangeSqlEditorQuery}

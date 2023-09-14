@@ -19,11 +19,19 @@ const useGetQueryExecute = ({ query = '' }) => {
         }
     }
 
+    const handleOnKeyDown = (e) => {
+        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            handleExecute();
+        }
+    };
+
     return {
         handleExecute,
         loading,
         queryData: data,
-        error: error?.response?.data?.error
+        error: error?.response?.data?.error,
+        handleOnKeyDown
     }
 
 }
