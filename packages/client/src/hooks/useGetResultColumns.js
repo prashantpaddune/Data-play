@@ -12,6 +12,8 @@ function useGetResultColumns({ columns = [], loading }) {
 
         const accessorFn = (item) => {
             const itemValue = item?.[column.key];
+
+            console.log("itemValue", itemValue)
             if (typeof itemValue === 'boolean') {
                 return <Data>{itemValue.toString() || <Dash>-</Dash>}</Data>;
             }
@@ -25,7 +27,7 @@ function useGetResultColumns({ columns = [], loading }) {
             }
 
             if (itemValue === null) {
-                return '';
+                return <Data><Dash>-</Dash></Data>;
             }
             if (Array.isArray(itemValue)) {
                 return <Data>{JSON.stringify(itemValue) || <Dash>-</Dash>}</Data>;
