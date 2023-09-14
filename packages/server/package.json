@@ -17,5 +17,9 @@
     "express-rate-limit": "^7.0.0",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "csv-parser": "^3.0.0",
+    "fs-extra": "^11.1.1"
   }
 }

@@ -2,6 +2,11 @@ require('./helpers/load-env');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
+
+const fs = require('fs-extra');
+const path = require('path');
+const csv = require('csv-parser');
+
 const cors = require('cors');
 const isSafeQuery = require("./helpers/safe-query");
 const rateLimit = require('express-rate-limit');
@@ -86,6 +91,56 @@ app.get('/api/auto-complete', async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+async function tableExists(tableName) {
+    const result = await pool.query("SELECT EXISTS (SELECT FROM pg_tables WHERE tablename = $1)", [tableName]);
+    return result.rows[0].exists;
+}
+
+async function columnExists(tableName, columnName) {
+    const result = await pool.query("SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = $1 AND column_name = $2)", [tableName, columnName]);
+    return result.rows[0].exists;
+}
+
+app.get('/api/import-csvs', async (req, res) => {
+    const directoryPath = path.join(__dirname, 'data');
+
+    try {
+        const files = await fs.readdir(directoryPath);
+        for (const file of files) {
+            if (path.extname(file) === '.csv') {
+                const tableName = path.basename(file, '.csv').toLowerCase();
+
+                if (!await tableExists(tableName)) {
+                    await pool.query(`CREATE TABLE "${tableName}" ()`);
+                }
+
+                const data = [];
+
+                fs.createReadStream(path.join(directoryPath, file))
+                    .pipe(csv())
+                    .on('data', (row) => data.push(row))
+                    .on('end', async () => {
+                        for (const row of data) {
+                            for (const col of Object.keys(row)) {
+                                if (!await columnExists(tableName, col)) {
+                                    await pool.query(`ALTER TABLE "${tableName}" ADD COLUMN "${col}" text`);
+                                }
+                            }
+
+                            const cols = Object.keys(row).map(col => `"${col}"`).join(', ');
+                            const values = Object.values(row).map(val => `'${val.replace(/'/g, "''")}'`).join(', ');
+                            await pool.query(`INSERT INTO "${tableName}" (${cols}) VALUES (${values})`);
+                        }
+                    });
+            }
+        }
+        res.send('CSVs imported to PostgreSQL successfully!');
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        res.status(500).send('Server Error');
     }
 });
 
