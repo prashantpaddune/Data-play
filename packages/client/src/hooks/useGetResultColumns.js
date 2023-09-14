@@ -13,7 +13,6 @@ function useGetResultColumns({ columns = [], loading }) {
         const accessorFn = (item) => {
             const itemValue = item?.[column.key];
 
-            console.log("itemValue", itemValue)
             if (typeof itemValue === 'boolean') {
                 return <Data>{itemValue.toString() || <Dash>-</Dash>}</Data>;
             }

@@ -7,6 +7,7 @@ import useGetResultColumns from "@/hooks/useGetResultColumns";
 import Table from "@/components/Table";
 import Loader from "@/components/Loader";
 import { Wrapper, TableLoader } from "@/page-components/PageHome/styles";
+import Error from "@/components/Error";
 
 export default function PageHome() {
     const {
@@ -23,6 +24,7 @@ export default function PageHome() {
         handleExecute = () => {},
         loading = false,
         queryData = {},
+        error = {}
     } = useGetQueryExecute({ query: executedQuery });
 
     const { columns = [], query_results = [] } = queryData || {};
@@ -30,13 +32,28 @@ export default function PageHome() {
     const columnsData = useGetResultColumns({ columns : columns });
 
     if (suggestionloading) {
-        return <Wrapper><Loader /></Wrapper>
+        return (
+            <Wrapper>
+                <Loader margin={10}/>
+            </Wrapper>
+        );
     }
-
 
     const renderTable = () => {
         if (loading) {
-            return <TableLoader><Loader /></TableLoader>
+            return (
+                <TableLoader>
+                    <Loader />
+                </TableLoader>
+            );
+        }
+
+        if (error.length > 0) {
+            return (
+                <TableLoader>
+                    <Error error={error}/>
+                </TableLoader>
+            );
         }
 
         return (
@@ -46,7 +63,7 @@ export default function PageHome() {
                 loading={true}
                 loadingRowsCount={10}
             />
-        )
+        );
     }
 
     return (

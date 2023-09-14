@@ -1,8 +1,8 @@
 import { Container } from "@/components/Loader/styles";
 
-const Loader = () => {
+const Loader = (props) => {
     return (
-        <Container>
+        <Container {...props}>
             <div className="spinner"/>
         </Container>
     )

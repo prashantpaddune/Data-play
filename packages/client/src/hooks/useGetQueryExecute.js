@@ -23,6 +23,7 @@ const useGetQueryExecute = ({ query = '' }) => {
         handleExecute,
         loading,
         queryData: data,
+        error: error?.response?.data?.error
     }
 
 }

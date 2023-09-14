@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 20px;
+  margin-top: ${({ margin }) => (margin ? margin : "100px")};
   .spinner {
     width: 50px;
     aspect-ratio: 1;

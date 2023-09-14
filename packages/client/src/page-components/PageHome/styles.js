@@ -14,6 +14,5 @@ export const TableLoader = styled.div`
   align-content: flex-start;
   text-align: center;
   min-height: 50vh;
-  margin-top: 20px;
   background-color: #f0f0f0;
 `;
