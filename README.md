@@ -13,7 +13,6 @@ Live Demo: http://16.171.35.92:3000
 - [Tech Stack](#-tech-stack)
 - [Performance](#-performance)
 - [Getting Started](#-getting-started)
-- [Contributions](#-contributions)
 - [License](#-license)
 
 ## 🧰 Tech Stack
