@@ -6,6 +6,8 @@
 
 Data Play allows users to craft, test, and master your SQL skills with Data Play. By harnessing the capabilities of modern technologies and focusing on user experience, this platform is suited for both SQL novices and experts.
 
+Live Demo: http://16.171.35.92:3000
+
 ## Table of Contents
 
 - [Tech Stack](#-tech-stack)
