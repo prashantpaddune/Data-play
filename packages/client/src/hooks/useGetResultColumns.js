@@ -64,7 +64,7 @@ const Head = styled.div`
 `;
 
 const Data = styled(Head)`
-	width: 100%;
+	width: 150px;
 	max-width: 200px;
 	white-space: nowrap;
 	overflow: hidden;
